@@ -11,4 +11,13 @@ jobs:
               with: 
                 who-to-greet: ALI
             - name: Log Greeting time
-              run: echo "${{ steps.greet.outputs.time }}"     
+              run: echo "${{ steps.greet.outputs.time }}"   
+    
+    checkout-actions:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: List files befoer
+              run: ls -a
+            - uses: actions/checkout@v3
+            - name: List files after
+              run: ls -a             
