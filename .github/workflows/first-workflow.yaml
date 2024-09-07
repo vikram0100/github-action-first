@@ -24,4 +24,4 @@ jobs:
       - name: echo a string
         run: Write-Output "test powershell"
       - name: error-setup
-        run: donpt existsss
+        run: donpt existssss
