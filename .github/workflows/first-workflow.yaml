@@ -1,9 +1,8 @@
 name: first workflow
 on: [push]
 
-
 jobs:
-  run-shell-commands:
+  run-shell-commands: # user defined job name
     runs-on: ubuntu-latest
     steps:
       - name: echo astring
@@ -11,4 +10,18 @@ jobs:
       - name: Multiline command 
         run: |
           node -v
-          npm -v  
+          npm -v
+
+  parellel-job-macos:
+    runs-on: macos-latest
+    steps:
+      - name: View SW version
+        run: sw_vers
+  dependant-job:
+    runs-on: windows-latest
+    needs: run-shell-commands              
+    steps:
+      - name: echo a string
+        run: Write-Output "test powershell"
+      - name: error-setup
+        run: donpt exist
