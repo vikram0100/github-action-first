@@ -19,9 +19,8 @@ jobs:
     steps:
       - name: Display working dir and files
         run: |
-          pwd
-          ls 
-          ls -a 
-          echo $GITHUB_SHA
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_WORKSPACE
+          Get-location
+          dir
+          echo $env:GITHUB_SHA
+          echo $env:GITHUB_REPOSITORY
+          echo $env:GITHUB_WORKSPACE
