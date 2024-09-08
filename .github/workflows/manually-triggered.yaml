@@ -1,8 +1,22 @@
 name: Manually Triggered
 on:
    workflow_dispatch:
+    inputs:
+        string:
+            description: A string input
+            type: string
+            required: true
+            default: "Default value" 
+        environment:
+            description: Environments
+            type: environment
+            required: true      
+
 jobs:
    logs-info:  
      runs-on: ubuntu-latest
      steps:
         - run: echo $GITHUB_REF
+        - run: |
+            echo "String: ${{  inputs.string }}"
+            echo "String: ${{  inputs.environment }}"    
