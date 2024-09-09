@@ -1,6 +1,7 @@
 name: Exxpresio and context
 
 on: [push, pull_request, issues, workflow_dispatch]
+run-name: "Tile for expression and context by @${{ github.actor}}, events: {{ github.events }}"
 
 jobs:
     using-expression-and-context:
