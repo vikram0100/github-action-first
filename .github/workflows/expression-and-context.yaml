@@ -1,11 +1,20 @@
 name: Exxpresio and context
 
 on: [push, pull_request, issues, workflow_dispatch]
-run-name: "Tile for expression and context by @${{ github.actor}}, events: {{ github.events }}"
+run-name: "Tile for expression and context by @${{ github.actor}}, events: {{ github.event_name }}"
 
 jobs:
+    runs-on-issues-and-prs:
+        runs-on: ubuntu-latest
+        if: contains(fromJson('["issues","pull_request"]'),github.event_name)
+        steps:
+           - name: Run only if issues has a bug label
+             if: contains(github.event.issue.labels.*.name,'bug')
+             run: echo ${{join(github.event.issue.labels.*.name,',')}}
+              
     using-expression-and-context:
         runs-on: ubuntu-latest
+        if: github.event_name == 'push' # only runduring push evenests
         steps:
             - name: Expression
               id: expression
