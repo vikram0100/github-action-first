@@ -1,4 +1,4 @@
-name:  environmentvariable
+name:  environmentvariable and symically assignedd varibels
 on: [push]
 
 env:
@@ -16,7 +16,11 @@ jobs:
       - name: Log ENV variables
         run: echo $GITHUB_REF
       - name: Log Context
-        run: echo '${{ github.ref }}'  
+        run: echo '${{ github.ref }}' 
+      - name: set env var
+        run: |
+          echo "NEW_ENV_VAR=$(date)" >>"$GITHUB_ENV"   
+          echo "JOB_LEVEL_ENV=$RANDOM" >> "$GITHUB_ENV"
       - name: Log custom env var
         env:
             STEP_LEVEL_ENV: only for this step
@@ -24,5 +28,6 @@ jobs:
         run: |
          echo '${{ env.STEP_LEVEL_ENV }}'
          echo $WF_LEVEL_ENV
-         echo $JOB_LEVEL_ENV     
+         echo $JOB_LEVEL_ENV   
+         echo $GITHUB_ENV  
           
