@@ -6,7 +6,7 @@ env:
 
 jobs:
   env-vas-and-context:
-    runs-on: ununtu-latest
+    runs-on: ubuntu-latest
     # if $GITHUB_REF == 'refs/heads/main' # Dont do this
     # because below part is process before sendin to runner macnhine as env is not avaibale before runner
     if: github.ref == 'refs/heads/main'
@@ -21,6 +21,15 @@ jobs:
         run: |
           echo "NEW_ENV_VAR=$(date)" >>"$GITHUB_ENV"   
           echo "JOB_LEVEL_ENV=$RANDOM" >> "$GITHUB_ENV"
+
+      - name: Multiline env var
+        run: |
+          DELIMETER=1234
+          echo "RANDOM_JOKE<<$DELIMETER" >> "$GITHUB_ENV" 
+          echo "here joke 1" >> "$GITHUB_ENV"
+          echo "here is joke 2"  >> "$GITHUB_ENV"
+          echo "$DELIMETER" >>  "$GITHUB_ENV"
+
       - name: Log custom env var
         env:
             STEP_LEVEL_ENV: only for this step
@@ -30,4 +39,5 @@ jobs:
          echo $WF_LEVEL_ENV
          echo $JOB_LEVEL_ENV   
          echo $GITHUB_ENV  
+         echo $RANDOM_JOKE
           
