@@ -1,0 +1,28 @@
+name:  environmentvariable
+on: [push]
+
+env:
+    WF_LEVEL_ENV: availabe to all jobs
+
+jobs:
+  env-vas-and-context:
+    runs-on: ununtu-latest
+    # if $GITHUB_REF == 'refs/heads/main' # Dont do this
+    # because below part is process before sendin to runner macnhine as env is not avaibale before runner
+    if: github.ref == 'refs/heads/main'
+    env: 
+        JOB_LEVEL_ENV: availabe to all steps 
+    steps:
+      - name: Log ENV variables
+        run: echo $GITHUB_REF
+      - name: Log Context
+        run: echo '${{ github.ref }}'  
+      - name: Log custom env var
+        env:
+            STEP_LEVEL_ENV: only for this step
+            WF_LEVEL_ENV: overwrite
+        run: |
+         echo '${{ env.STEP_LEVEL_ENV }}'
+         echo $WF_LEVEL_ENV
+         echo $JOB_LEVEL_ENV     
+          
