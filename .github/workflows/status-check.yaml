@@ -3,17 +3,25 @@ on: [push]
 
 jobs:
     job-1:
+        timeout-minutes: 1    
         runs-on: ubuntu-latest
         steps:
             - name: step 1
               run: sleep 10
+              timeout-minutes: 1
             - name: steps-2
               id: step-2 
+              continue-on-error: true
               run: exit 1 
-            - name: Run on failure
+            - name: Run on fstep 2 ailure
               # runs when sucess if:  steps.step-2.conclusion == 'failure'
               if: failure()
               run: echo "Runs only on failure"   
+
+            - name: Run on ffailure
+              if: failure()
+              run: echo "Runs failure"
+
             - name: Always runs
               # only if: success() || failure()
               if: always()
