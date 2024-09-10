@@ -1,6 +1,16 @@
 name: Matrix jobs
 on: [push]
 
+#------- ORIGINAL --------#
+# X {os: ubuntu-latest, node-version: 14, is-ubuntu: true, experimental: false}
+# {os: ubuntu-latest, node-version: 15, is-ubuntu: true, experimental: false}
+# {os: ubuntu-latest, node-version: 16, is-ubuntu: true, experimental: true}
+# {os: windows-latest, node-version: 14, experimental: false}
+# {os: windows-latest, node-version: 15, experimental: false}
+# {os: windows-latest, node-version: 16, experimental: false}
+# {os: macos-latest, node-version: 15}
+# {os: ubuntu-latest, node-version: 17 }
+
 jobs:
     node-matrix:
         continue-on-error: false
@@ -8,7 +18,7 @@ jobs:
             matrix:
                 node-version: [14,16]
                 os: [ubuntu-latest,windows-latest]
-                includes:
+                include:
                     - os: ubuntu-latest
                       is-ubuntu: true # merge item i narrar os: ununtu-layest, node-version:14, is-ubuntu-true, experimental: false
                     - os: macos-latest
@@ -19,7 +29,7 @@ jobs:
                       experimental: true
                     - os: ubuntu-latest
                       node-version: 17
-                excludes:
+                exclude:
                     - os: windows-latest
                       node-version: 14         
             max-parallel: 3    
