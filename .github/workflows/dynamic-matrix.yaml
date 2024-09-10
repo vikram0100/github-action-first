@@ -19,7 +19,7 @@ jobs:
         matrix-arrays: ${{ steps.matrix-arrays.outputs.result }}
       steps:
         - uses: actions/github-script@v6
-          id: martix-arrays
+          id: matrix-arrays
           with:
             script: " return {os: context.payload.inputs['os'].split(','), 'node-version': context.payload.inputs['node-version'].split(',') }"
             result-encoding: json
