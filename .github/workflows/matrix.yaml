@@ -1,0 +1,34 @@
+name: Matrix jobs
+on: [push]
+
+jobs:
+    node-matrix:
+        continue-on-error: false
+        strategy:
+            matrix:
+                node-version: [14,16]
+                os: [ubuntu-latest,windows-latest]
+                includes:
+                    - os: ubuntu-latest
+                      is-ubuntu: true # merge item i narrar os: ununtu-layest, node-version:14, is-ubuntu-true, experimental: false
+                    - os: macos-latest
+                      node-version: 15
+                    - experimental: false    
+                    - os: ubuntu-latest
+                      node-version: 16
+                      experimental: true
+                    - os: ubuntu-latest
+                      node-version: 17
+                excludes:
+                    - os: windows-latest
+                      node-version: 14         
+            max-parallel: 3    
+            fail-fast: false # prevent github from canceling pending or coming stage if one steps fails 
+        runs-on:  ${{ matrix.os }}       
+        steps:
+            - run: node -v
+            - uses: actions/setup-node@v3
+              with:
+                node-version: ${{ matrix.node-version }}
+            - run: node - v    
+            - run: echo '${{ matrix }}'
