@@ -16,3 +16,12 @@ jobs:
             name: ${{ inputs.name }}
         secrets: # inherit ( can we used to get all value from another workflow)
             access-token: ${{ secrets.ACCESS_GITHUB_SECRETS }}    
+    
+    calling-resubale-on-same-repo:
+        uses: ./.github/workflows/resuable-workflow.yaml
+    
+    calling-resuable-wf-output:
+        runs-on: ubuntu-latest
+        needs: calling-resubale-on-same-repo
+        steps:
+            - run: echo ${{ needs.calling-resubale-on-same-repo.outputs.date }}   
