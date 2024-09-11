@@ -1,0 +1,18 @@
+name: callig Resuabale workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+        name:
+            description: 'Input Description'
+            type: string
+            default: 'BIKI'
+            required: false           
+
+jobs:
+    calling-resubale-workflow:
+        uses: vikram0100/github-action2/.github/workflows/resuable.yaml@main   # we are callingw workflow from another repo.
+        with:
+            name: ${{ inputs.name }}
+        secrets: # inherit ( can we used to get all value from another workflow)
+            access-token: ${{ secrets.ACCESS_GITHUB_SECRETS }}    
