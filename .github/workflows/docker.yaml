@@ -24,4 +24,15 @@ jobs:
           node -v
           cat /etc/os-release
       - name: Log Env
-        run: echo $API_URL              
+        run: echo $API_URL       
+      
+      - name:  Container steps
+        uses: docker://node:18.16-alpine3.17 # docker://ghcr.io/node:18.16
+        with:
+            entrypoint: '/usr/local/bin/node' #replace existin if not add
+            args: -p 2+3
+      
+      - name: Log Node Version
+        uses: docker://node:18.16-alpine3.17      
+        with:
+            args: -v
