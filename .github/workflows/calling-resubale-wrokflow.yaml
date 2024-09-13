@@ -19,6 +19,7 @@ jobs:
     
     calling-resubale-on-same-repo:
         uses: ./.github/workflows/resuable-workflow.yaml
+        secrets: inherit
     
     calling-resuable-wf-output:
         runs-on: ubuntu-latest

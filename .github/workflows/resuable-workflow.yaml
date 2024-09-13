@@ -8,6 +8,13 @@ on:
             value: ${{ jobs.generate-output.outputs.date }}
     
 jobs:
+    nested-workflow-call:
+        uses: vikram0100/github-action2/.github/workflows/resuable.yaml@main
+        with:
+            name: 'bikram'
+        secrets: 
+            access-token: ${{ secrets.ACCESS_GITHUB_TOKEN }}    
+
     generate-output:
         runs-on: ubuntu-latest
         outputs:
