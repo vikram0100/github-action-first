@@ -1,0 +1,46 @@
+name: build and publish
+on: 
+  release:
+    types: [published]
+
+jobs:
+  push-to-dockerhub-and-ghcr:
+    runs-on: ubuntu-latest
+    permission: 
+      package: write
+      contexts: read # set permission for registry ghcr
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to docker hub
+        uses: docker/login-action@v2
+        with:
+           username: ${{ secrets.DOCKER_USERNAME }}
+           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Login to github cr
+        uses: docker/login-action@v2
+        with:
+           registry: ghcr.io
+           username: ${{ github.actor }}
+           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract Metadata
+        id: metadata
+        uses: docker/metadata-action@v4
+        with:
+          image: |
+              alialaa17/simple-node-api
+              ghcr.io/${{ github.repository }}
+
+          tags: |
+            type= semver,pattern={{version}}
+            type= semver,pattern={{major}}.{{minor}}
+
+      - name: Build and publish docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
