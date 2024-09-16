@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "::debug::Running entrypoint"
 echo "Hello $1"
